@@ -20,7 +20,7 @@ setup(
         (os.path.join('share', package_name, 'urdf'), glob('urdf/*.xacro')),
 
         # Mesh dosyaları (hem STL hem stl)
-        (os.path.join('share', package_name, 'meshes'), glob('meshes/*.STL') + glob('meshes/*.stl')),
+        (os.path.join('share', package_name, 'meshes'), glob('meshes/*.STL')),
     ],
     install_requires=['setuptools'],
     zip_safe=True,

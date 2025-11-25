@@ -1,35 +1,59 @@
+import os
+from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
+from launch.substitutions import Command
 from launch_ros.actions import Node
-import subprocess
+# Hata düzeltmesi için gerekli import
+from launch_ros.descriptions import ParameterValue
 
 def generate_launch_description():
-    urdf_file = "/home/yagizcumen/rk_ws/src/rk_demo/urdf/robot_arm.urdf.xacro"
+    # Paketinizin share dizininin yolunu al
+    pkg_path = get_package_share_directory('rk_demo')
 
-    # xacro'yu Python'dan çalıştır ve çıktıyı al
-    robot_description_config = subprocess.check_output(
-        ["/opt/ros/jazzy/bin/xacro", urdf_file]
-    ).decode('utf-8')
+    # URDF dosyasının tam yolunu oluştur
+    # DİKKAT: Dosya adınız 'robot_arm.urdf.xacro' değilse bu satırı güncelleyin
+    urdf_path = os.path.join(pkg_path, 'urdf', 'robot_arm.urdf.xacro')
 
+    # RViz konfigürasyon dosyasının tam yolunu oluştur
+    rviz_config_path = os.path.join(pkg_path, 'config', 'view.rviz')
+
+    # robot_description parametresini oluştur
+    robot_description = ParameterValue(
+        Command(['xacro ', urdf_path]),
+        value_type=str
+    )
+
+    # LaunchDescription objesini oluştur ve node'ları ekle
     return LaunchDescription([
+
+        # Robot modelini yayınlayan state publisher
         Node(
-            package="joint_state_publisher_gui",
-            executable="joint_state_publisher_gui",
-            output="screen"
-        ),
-        Node(
-            package="robot_state_publisher",
-            executable="robot_state_publisher",
-            output="screen",
+            package='robot_state_publisher',
+            executable='robot_state_publisher',
+            name='robot_state_publisher',
+            output='screen',
             parameters=[{
-                "robot_description": robot_description_config
+                'robot_description': robot_description
             }]
         ),
-        Node(
-            package="rviz2",
-            executable="rviz2",
-            name="rviz2",
-            arguments=["-d", "/home/yagizcumen/rk_ws/src/rk_demo/config/view.rviz"],
-            output="screen"
-)
 
+        # Eklemleri kontrol etmek için GUI arayüzü
+        Node(
+            package='joint_state_publisher_gui',
+            executable='joint_state_publisher_gui',
+            name='joint_state_publisher_gui',
+        ),
+
+        # RViz'i, kaydedilmiş konfigürasyon dosyası ile başlat
+        Node(
+            package='rviz2',
+            executable='rviz2',
+            name='rviz2',
+            output='screen',
+            parameters=[{
+                # **EKLEME: Fixed Frame'i 'world' olarak ayarla**
+                'fixed_frame': 'world' 
+            }],
+            arguments=['-d', rviz_config_path],
+        ),
     ])
