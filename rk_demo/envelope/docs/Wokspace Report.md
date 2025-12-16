@@ -27,4 +27,4 @@ This workspace created by 800000 randomly distributed sample points. Randomly ge
 | Y | -1.6781 | 1.6723 | 3.3504 |
 | Z | 0.0500 | 2.0510 | 2.0010 |
 
-Note: This Envelope supposedly prevent robot from doing physically impossible moves. But in return the generator functions and file formats are not like in the work description. Also the robot model that is used has only 5 rotating joints, the envelope is prepared accordingly
+Note: This Envelope supposedly prevent robot from doing physically impossible moves. But in return the generator functions and file formats are not like in the work description. Also the robot model that is used has only 5 rotating joints, the envelope is prepared accordingly. I had to round up floats to 5 decimal points to make the file smaller since I was not able to upload the original file.
