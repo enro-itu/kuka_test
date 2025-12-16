@@ -16,7 +16,7 @@ joint_limits = {
 This workspace created by 800000 randomly distributed sample points. Randomly generated entries gave us x,y,z values of the end effector.
 
 
-![Robot Arm Workspace Plot](..\figures\workspace.png)
+![Robot Arm Workspace Plot](../figures/workspace.png)
 
 
 ## Reaches:
