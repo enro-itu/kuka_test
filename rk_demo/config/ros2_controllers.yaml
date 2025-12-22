@@ -16,6 +16,8 @@ joint_trajectory_controller:
       - base_to_rotary
       - rotary_to_lower
       - lower_to_upper
+      - upper_to_support
+      - support_to_wrist
     command_interfaces:
       - position
     state_interfaces:
