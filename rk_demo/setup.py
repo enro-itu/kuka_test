@@ -21,7 +21,10 @@ setup(
 
         # Mesh dosyaları (hem STL hem stl)
         (os.path.join('share', package_name, 'meshes'), glob('meshes/*.STL')),
-    ],
+       
+        # Config dosyaları (BİZİM EKLEDİĞİMİZ KISIM)
+        (os.path.join('share', package_name, 'config'), glob('config/*.yaml')),
+    ],  # <-- VİRGÜL BURAYA EKLENDİ
     install_requires=['setuptools'],
     zip_safe=True,
     maintainer='yagizcumen',
